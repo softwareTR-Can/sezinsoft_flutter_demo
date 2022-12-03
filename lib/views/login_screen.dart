@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controller/login_controller.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -9,8 +11,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  String kullaniciAdi = '';
-  String parola = '';
+  String username = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +58,14 @@ class _LoginScreenState extends State<LoginScreen> {
             decoration: InputDecoration(
               labelText: 'Kullanıcı Adı',
             ),
-            onChanged: (value) => kullaniciAdi = value,
+            onChanged: (value) => username = value,
           ),
           TextFormField(
             decoration: InputDecoration(
               //hintText: 'Parola',
               labelText: 'Parola',
             ),
-            onChanged: (value) => kullaniciAdi = value,
+            onChanged: (value) => username = value,
           ),
         ],
       ),
@@ -72,7 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   buildButton() {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+        login(username, password);
+      },
       style: ButtonStyle(
         elevation: MaterialStateProperty.all(8),
         shape: MaterialStateProperty.all(
@@ -81,7 +85,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       child: Center(
         child: Container(
-            decoration: const BoxDecoration(color: Colors.black),
             width: Get.width * 0.8,
             child: const Text(
               'Giriş',

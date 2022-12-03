@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sezinsoft_demo/views/dashboard_screen.dart';
 import 'package:sezinsoft_demo/views/login_screen.dart';
 
 import 'controller/login_controller.dart';
 
-void main() {
+void main() async{
+  await GetStorage.init();
   runApp(const MyApp());
 }
 
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.black,
       ),
-      home: Dashboard_Screen(),
+      home: isLogged() ? Dashboard_Screen() : LoginScreen(),
     );
   }
 }

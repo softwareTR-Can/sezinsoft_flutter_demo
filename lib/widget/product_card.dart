@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:sezinsoft_demo/models/product_model.dart';
 
 import '../constants.dart';
+import '../controller/basket_controller.dart';
 
+var tutar = 0.0.obs;
+BasketController controller = BasketController();
 
 productCard(ProductModel product) {
   var adet = 0.obs;
@@ -29,27 +32,36 @@ productCard(ProductModel product) {
                       fontWeight: FontWeight.bold, fontSize: 24),
                 ),
                 const SizedBox(height: 10),
-                Obx(() => adet < 1 ? ekleWidget(adet) : adetWidget(adet)),
+                Obx(() => adet < 1
+                    ? ekleWidget(adet, product.productPrice)
+                    : adetWidget(adet, product.productPrice)),
               ],
             ),
           ),
           const Spacer(),
-          Container(
-            height: Get.height / 4,
-            // width: Get.width / 2.1,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-              child: Image.network(product.productPhoto, fit: BoxFit.fill),
+          GestureDetector(
+            onTap: () {
+              controller.addToBasket(product);
+            },
+            child: Container(
+              height: Get.height / 4,
+              // width: Get.width / 2.1,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+                child: Image.network(product.productPhoto, fit: BoxFit.fill),
+              ),
             ),
           ),
         ],
       ));
 }
 
-ekleWidget(var adet) {
+ekleWidget(var adet, double productPrice) {
   return GestureDetector(
     onTap: () {
       adet++;
+      //BasketController().denemeBasketTutar(productPrice);
+      tutar.value += productPrice;
     },
     child: Container(
       width: Get.width / 5.2,
@@ -69,7 +81,7 @@ ekleWidget(var adet) {
   );
 }
 
-adetWidget(var adet) {
+adetWidget(var adet, double productPrice) {
   return Container(
     decoration: BoxDecoration(
       color: Colors.black,
@@ -80,6 +92,7 @@ adetWidget(var adet) {
         GestureDetector(
           onTap: () {
             adet--;
+            tutar.value -= productPrice;
           },
           child: Row(
             children: [
@@ -104,9 +117,8 @@ adetWidget(var adet) {
         GestureDetector(
           onTap: () {
             adet++;
-          },
-          onLongPress: () {
-            adet += 10;
+            tutar.value += productPrice;
+            //BasketController().denemeBasketTutar(productPrice);
           },
           child: Row(
             children: [
