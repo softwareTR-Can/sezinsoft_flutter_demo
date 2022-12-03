@@ -14,22 +14,29 @@ class CategoryController extends GetxController {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{
-        "token":"2C2322E3-5696-45B8-923D-3C932EC21710"
-      }),
+      body: jsonEncode(
+          <String, String>{"token": "2C2322E3-5696-45B8-923D-3C932EC21710"}),
     );
-    print('category get çalıştı');
-   var data = jsonDecode(response.body);
-    //categoryList.add(jsonDecode(response.body)['data']);
-    //categoryList = mapData.entries.map( (entry) => CategoryModel(categoryId: ['categoryId'],categoryName: ,)).toList();
+    var data = jsonDecode(response.body);
 
     categoryList = data['data']
         .map<CategoryModel>((x) => CategoryModel.fromMap(x))
         .toList();
 
-    for(int i=0; i<categoryList.length; i++){
+    //Aynı Kategoriden birden fazla geldiğinde silmek için -> (Fit&Form kategorisi gibi)
+    for (int i = 0; i < 1; i++) {
+      for (int j = 0; j < 5; j++) {
+        if (categoryList[i].categoryId == categoryList[j].categoryId) {
+          categoryList.removeAt(categoryList[i + 1].categoryId);
+        }
+        //----
+      }
+    }
+
+    for (int i = 0; i < categoryList.length; i++) {
       print(categoryList[i].categoryName);
     }
+
     print(jsonDecode(response.body));
 
     if (response.statusCode == 201) {

@@ -38,7 +38,8 @@ class _BasketScreenState extends State<BasketScreen> {
       children: [
         SizedBox(height: 15),
         Text('Sepetim', style: kTextStyle.copyWith(fontSize: 24)),
-        Text('Tutar: ${tutar.toStringAsFixed(2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => "${m[1]},")} TL',
+        Text(
+            'Tutar: ${tutar.toStringAsFixed(2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => "${m[1]},")} TL',
             style: kTextStyle.copyWith(fontSize: 24)),
       ],
     );
