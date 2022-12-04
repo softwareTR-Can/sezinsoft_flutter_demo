@@ -6,6 +6,7 @@ import 'package:sezinsoft_demo/widget/basket_widget.dart';
 import 'package:sezinsoft_demo/widget/username_widget.dart';
 
 import '../controller/product_controller.dart';
+import '../get_storage_service.dart';
 import '../widget/product_card.dart';
 
 class Dashboard_Screen extends StatefulWidget {
@@ -69,13 +70,14 @@ class _Dashboard_ScreenState extends State<Dashboard_Screen> {
                     return GestureDetector(
                       onTap: () {
                         setState(() {
-                          inSelectedCategoryId = categoryController.categoryList[index].categoryId;
+                          inSelectedCategoryId =
+                              categoryController.categoryList[index].categoryId;
                         });
                       },
                       child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: index == inSelectedCategoryId-1
+                            color: index == inSelectedCategoryId - 1
                                 ? Colors.black
                                 : Colors.white,
                           ),
@@ -85,7 +87,7 @@ class _Dashboard_ScreenState extends State<Dashboard_Screen> {
                               categoryController
                                   .categoryList[index].categoryName
                                   .toString(),
-                              style: index == inSelectedCategoryId-1
+                              style: index == inSelectedCategoryId - 1
                                   ? kTextStyle.copyWith(color: Colors.white)
                                   : kTextStyle,
                             ),
@@ -101,21 +103,25 @@ class _Dashboard_ScreenState extends State<Dashboard_Screen> {
 
   buildProduct() {
     return FutureBuilder<dynamic>(
-      future: productController.getProduct(inSelectedCategoryId),
-      builder: (context, snapshot) {
-        return ListView.builder(
-            //physics: BouncingScrollPhysics(),
-            itemCount: productController.productList.length,
-            itemBuilder: (context, index) {
-              return Column(
-                children: [
-                  productCard(productController.productList[index]),
-                  const SizedBox(height: 30),
-                ],
-              );
-            });
-      }
-    );
+        future: productController.getProduct(inSelectedCategoryId),
+        builder: (context, snapshot) {
+          return ListView.builder(
+              //physics: BouncingScrollPhysics(),
+              itemCount: productController.productList.length,
+              itemBuilder: (context, index) {
+                GetStorageServices().saveListWithGetStorage('storageKey', [
+                  1,'2',3,4.2,'abc'
+                ]);
+                GetStorageServices().readWithGetStorage('storageKey');
+                //readList();
+                return Column(
+                  children: [
+                    productCard(productController.productList[index]),
+                    const SizedBox(height: 30),
+                  ],
+                );
+              });
+        });
   }
 }
 

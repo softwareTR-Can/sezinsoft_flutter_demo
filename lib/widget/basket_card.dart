@@ -4,18 +4,20 @@ import 'package:sezinsoft_demo/models/product_model.dart';
 
 import '../constants.dart';
 import '../controller/basket_controller.dart';
+import '../models/basket_model.dart';
 
 var tutar = 0.0.obs;
 BasketController controller = BasketController();
 
-productCard(ProductModel product) {
+basketCard(BasketModel basketModel) {
   var adet = 0.obs;
 
   for(int i =0;i<basketList.length;i++){
-    if(product.productId == basketList[i].productId && product.categoryId == basketList[i].categoryId){
+    if(basketModel.productId == basketList[i].productId && basketModel.categoryId == basketList[i].categoryId){
       adet.value = basketList[i].adet;
     }
   }
+
   return Card(
       elevation: 0,
       color: Colors.yellow,
@@ -30,17 +32,17 @@ productCard(ProductModel product) {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                    child: Text(product.productName,
+                    child: Text(basketModel.productName,
                         style: kProductCardTextStyle)),
                 Text(
-                  "${product.productPrice.toStringAsFixed(2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => "${m[1]},")} TL",
+                  "${basketModel.productPrice.toStringAsFixed(2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => "${m[1]},")} TL",
                   style: kProductCardTextStyle.copyWith(
                       fontWeight: FontWeight.bold, fontSize: 24),
                 ),
                 const SizedBox(height: 10),
                 Obx(() => adet < 1
-                    ? ekleWidget(adet, product)
-                    : adetWidget(adet, product)),
+                    ? ekleWidget(adet, basketModel)
+                    : adetWidget(adet, basketModel)),
               ],
             ),
           ),
@@ -55,7 +57,7 @@ productCard(ProductModel product) {
               // width: Get.width / 2.1,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-                child: Image.network(product.productPhoto, fit: BoxFit.fill),
+                child: Image.network(basketModel.productPhoto, fit: BoxFit.fill),
               ),
             ),
           ),
@@ -63,12 +65,12 @@ productCard(ProductModel product) {
       ));
 }
 
-ekleWidget(var adet, ProductModel product) {
+ekleWidget(var adet, BasketModel basketModel) {
   return GestureDetector(
     onTap: () {
       adet++;
-      tutar.value += product.productPrice;
-      controller.addBasket(product);
+      tutar.value += basketModel.productPrice;
+      controller.addBasket(ProductModel(productId: basketModel.productId, productName: basketModel.productName, productPrice: basketModel.productPrice, productCurrency: '', productPhoto: basketModel.productPhoto, categoryId: basketModel.categoryId, categoryName: ''));
     },
     child: Container(
       width: Get.width / 5.2,
@@ -88,7 +90,7 @@ ekleWidget(var adet, ProductModel product) {
   );
 }
 
-adetWidget(var adet, ProductModel product) {
+adetWidget(var adet, BasketModel basketModel) {
   return Container(
     decoration: BoxDecoration(
       color: Colors.black,
@@ -99,8 +101,8 @@ adetWidget(var adet, ProductModel product) {
         GestureDetector(
           onTap: () {
             adet--;
-            tutar.value -= product.productPrice;
-            controller.deleteBasket(product);
+            tutar.value -= basketModel.productPrice;
+            controller.deleteBasket(ProductModel(productId: basketModel.productId, productName: basketModel.productName, productPrice: basketModel.productPrice, productCurrency: '', productPhoto: basketModel.productPhoto, categoryId: basketModel.categoryId, categoryName: ''));
           },
           child: Row(
             children: [
@@ -117,16 +119,16 @@ adetWidget(var adet, ProductModel product) {
           color: Colors.grey,
           child: Center(
               child: Obx(() => Text(
-                    adet.toString(),
-                    style: kTextStyle.copyWith(
-                        fontWeight: FontWeight.bold, fontSize: 20),
-                  ))),
+                adet.toString(),
+                style: kTextStyle.copyWith(
+                    fontWeight: FontWeight.bold, fontSize: 20),
+              ))),
         ),
         GestureDetector(
           onTap: () {
             adet++;
-            tutar.value += product.productPrice;
-            controller.addBasket(product);
+            tutar.value += basketModel.productPrice;
+            controller.addBasket(ProductModel(productId: basketModel.productId, productName: basketModel.productName, productPrice: basketModel.productPrice, productCurrency: '', productPhoto: basketModel.productPhoto, categoryId: basketModel.categoryId, categoryName: ''));
             //BasketController().denemeBasketTutar(productPrice);
           },
           child: Row(
@@ -134,7 +136,7 @@ adetWidget(var adet, ProductModel product) {
               Container(
                 width: 40,
                 child:
-                    Icon(Icons.arrow_forward_ios_outlined, color: Colors.white),
+                Icon(Icons.arrow_forward_ios_outlined, color: Colors.white),
               ),
             ],
           ),

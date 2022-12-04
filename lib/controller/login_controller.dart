@@ -22,8 +22,8 @@ Future<LoginResponseModel> login(String username, String password) async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      'username': 'flutter.demo',
-      'password': '123456',
+      'username': username,
+      'password': password,
     }),
   );
 

@@ -4,31 +4,102 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sezinsoft_demo/models/product_model.dart';
 
+import '../get_storage_service.dart';
 import '../models/basket_model.dart';
 
+dynamic basketList = [].obs;
+
 class BasketController extends GetxController {
-  var tutar = 0.obs;
-  dynamic basketList = [].obs;
+  var tutar = 0.0.obs;
 
-  addToBasket(ProductModel product) async {
-    basketList.add(product);
 
-    final box = GetStorage();
-    // Storing data
-    //...
-    var paymentsAsMap = basketList.map((basket) => basket.toJson()).toList();
-    String jsonString = jsonEncode(paymentsAsMap);
-    box.write('payments', jsonString);
+  final box = GetStorage();
 
-    // fetching data
-    var result = box.read('payments');
-    dynamic jsonData = jsonDecode(result);
-    basketList = jsonData.map((payment) => BasketModel.fromMap(jsonData)).toList().obs;
+  addBasket(ProductModel product) {
+    /// sepete ürün ekleme --- parametre ürün
+
+    int adet = 1;
+
+    for (int i = 0; i < basketList.length; i++) {
+      if (product.categoryId == basketList[i].categoryId &&
+          product.productId == basketList[i].productId) {
+        /// ---
+        adet = basketList[i].adet + 1;
+        basketList.removeAt(i);
+      }
+    }
+
+    basketList.add(BasketModel(
+        adet: adet,
+        productId: product.productId,
+        productName: product.productName,
+        productPrice: product.productPrice,
+        productPhoto: product.productPhoto,
+        categoryId: product.categoryId));
+
+    var list = [];
+
+    for (int i = 0; i < basketList.length; i++) {
+      list.add(basketList[i].adet);
+      list.add(basketList[i].productName);
+      list.add(basketList[i].productPrice);
+      list.add(basketList[i].productPhoto);
+      list.add(basketList[i].productId);
+      list.add(basketList[i].categoryId);
+    }
+
+    GetStorageServices().saveListWithGetStorage('storageKey2', list);
   }
 
-  getTutar(){
-    for(int i=0; i<basketList.length; i++){
-      tutar += basketList[i].productPrice;
+  deleteBasket(ProductModel product) {
+    /// sepetten ürün çıkartma --- parametre ürün
+
+    for (int i = 0; i < basketList.length; i++) {
+      if (product.categoryId == basketList[i].categoryId &&
+          product.productId == basketList[i].productId) {
+        /// ---
+        var adet = basketList[i].adet - 1;
+
+        basketList.removeAt(i);
+
+        adet == 0
+            ? null
+            : basketList.add(BasketModel(
+                adet: adet,
+                productId: product.productId,
+                productName: product.productName,
+                productPrice: product.productPrice,
+                productPhoto: product.productPhoto,
+                categoryId: product.categoryId));
+      }
+    }
+
+    var list = [];
+
+    for (int i = 0; i < basketList.length; i++) {
+      list.add(basketList[i].adet);
+      list.add(basketList[i].productName);
+      list.add(basketList[i].productPrice);
+      list.add(basketList[i].productPhoto);
+      list.add(basketList[i].productId);
+      list.add(basketList[i].categoryId);
+    }
+
+    GetStorageServices().saveListWithGetStorage('storageKey2', list);
+  }
+
+  getBasket() {
+    var list = GetStorageServices().readWithGetStorage('storageKey2');
+
+    for (int i = 0; i < list.length / 6; i += 6) {
+      basketList.add(BasketModel(
+        adet: int.parse(list[i]),
+        productId: int.parse(list[i + 1]),
+        productName: list[i + 2],
+        productPrice: double.parse(list[i + 3]),
+        productPhoto: list[i + 4],
+        categoryId: int.parse(list[i + 5]),
+      ));
     }
   }
 }

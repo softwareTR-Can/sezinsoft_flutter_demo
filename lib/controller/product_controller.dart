@@ -14,8 +14,8 @@ class ProductController extends GetxController {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        "token":"2C2322E3-5696-45B8-923D-3C932EC21710",
-        "category_id" : "${categoryId}"
+        "token": "2C2322E3-5696-45B8-923D-3C932EC21710",
+        "category_id": "${categoryId}"
       }),
     );
     print('product get çalıştı');
@@ -23,11 +23,10 @@ class ProductController extends GetxController {
     //categoryList.add(jsonDecode(response.body)['data']);
     //categoryList = mapData.entries.map( (entry) => CategoryModel(categoryId: ['categoryId'],categoryName: ,)).toList();
 
-    productList = data['data']
-        .map<ProductModel>((x) => ProductModel.fromMap(x))
-        .toList();
+    productList =
+        data['data'].map<ProductModel>((x) => ProductModel.fromMap(x)).toList();
 
-    for(int i=0; i<productList.length; i++){
+    for (int i = 0; i < productList.length; i++) {
       print(productList[i].productName);
     }
     print(jsonDecode(response.body));

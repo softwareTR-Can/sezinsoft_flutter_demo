@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sezinsoft_demo/constants.dart';
+import 'package:sezinsoft_demo/controller/basket_controller.dart';
+import 'package:sezinsoft_demo/widget/basket_card.dart';
 import 'package:sezinsoft_demo/widget/basket_widget.dart';
-import 'package:sezinsoft_demo/widget/product_card.dart';
 import 'package:sezinsoft_demo/widget/username_widget.dart';
 
 class BasketScreen extends StatefulWidget {
@@ -13,6 +14,8 @@ class BasketScreen extends StatefulWidget {
 }
 
 class _BasketScreenState extends State<BasketScreen> {
+  //BasketController basketController = BasketController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +28,11 @@ class _BasketScreenState extends State<BasketScreen> {
               buildBasketWidget(),
               buildUsernameWidget(),
               buildBasketDescription(),
+              Expanded(
+                child: Container(
+                  child: buildBasketProduct(),
+                ),
+              ),
             ],
           ),
         ),
@@ -43,5 +51,21 @@ class _BasketScreenState extends State<BasketScreen> {
             style: kTextStyle.copyWith(fontSize: 24)),
       ],
     );
+  }
+
+  buildBasketProduct() {
+    print('aaa');
+    print(basketList.length);
+    return ListView.builder(
+        itemCount: basketList.length,
+        itemBuilder: (context, index) {
+          print('aaaa');
+          return Column(
+            children: [
+              basketCard(basketList[index]),
+              const SizedBox(height: 30),
+            ],
+          );
+        });
   }
 }
