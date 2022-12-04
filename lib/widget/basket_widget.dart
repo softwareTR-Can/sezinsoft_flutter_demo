@@ -29,7 +29,7 @@ buildBasketWidget() {
                 const SizedBox(width: 20),
                 Obx(
                   () => Text(
-                      "${tutar.toStringAsFixed(2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => "${m[1]},")} TL",
+                      "${basketTotal.toStringAsFixed(2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => "${m[1]},")} TL",
                       style: kTextStyle.copyWith(color: Colors.white)),
                 )
               ],

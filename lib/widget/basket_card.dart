@@ -6,14 +6,15 @@ import '../constants.dart';
 import '../controller/basket_controller.dart';
 import '../models/basket_model.dart';
 
-var tutar = 0.0.obs;
+//var tutar = 0.0.obs;
 BasketController controller = BasketController();
 
 basketCard(BasketModel basketModel) {
   var adet = 0.obs;
 
-  for(int i =0;i<basketList.length;i++){
-    if(basketModel.productId == basketList[i].productId && basketModel.categoryId == basketList[i].categoryId){
+  for (int i = 0; i < basketList.length; i++) {
+    if (basketModel.productId == basketList[i].productId &&
+        basketModel.categoryId == basketList[i].categoryId) {
       adet.value = basketList[i].adet;
     }
   }
@@ -47,18 +48,13 @@ basketCard(BasketModel basketModel) {
             ),
           ),
           const Spacer(),
-          GestureDetector(
-            onTap: () {
-              //controller.deleteBasket(product);
-              controller.getBasket();
-            },
-            child: Container(
-              height: Get.height / 4,
-              // width: Get.width / 2.1,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-                child: Image.network(basketModel.productPhoto, fit: BoxFit.fill),
-              ),
+          Container(
+            height: Get.height / 4,
+            // width: Get.width / 2.1,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+              child:
+                  Image.network(basketModel.productPhoto, fit: BoxFit.fill),
             ),
           ),
         ],
@@ -69,8 +65,15 @@ ekleWidget(var adet, BasketModel basketModel) {
   return GestureDetector(
     onTap: () {
       adet++;
-      tutar.value += basketModel.productPrice;
-      controller.addBasket(ProductModel(productId: basketModel.productId, productName: basketModel.productName, productPrice: basketModel.productPrice, productCurrency: '', productPhoto: basketModel.productPhoto, categoryId: basketModel.categoryId, categoryName: ''));
+      controller.addTutar(basketModel.productPrice);
+      controller.addBasket(ProductModel(
+          productId: basketModel.productId,
+          productName: basketModel.productName,
+          productPrice: basketModel.productPrice,
+          productCurrency: '',
+          productPhoto: basketModel.productPhoto,
+          categoryId: basketModel.categoryId,
+          categoryName: ''));
     },
     child: Container(
       width: Get.width / 5.2,
@@ -101,8 +104,15 @@ adetWidget(var adet, BasketModel basketModel) {
         GestureDetector(
           onTap: () {
             adet--;
-            tutar.value -= basketModel.productPrice;
-            controller.deleteBasket(ProductModel(productId: basketModel.productId, productName: basketModel.productName, productPrice: basketModel.productPrice, productCurrency: '', productPhoto: basketModel.productPhoto, categoryId: basketModel.categoryId, categoryName: ''));
+            controller.deleteTutar(basketModel.productPrice);
+            controller.deleteBasket(ProductModel(
+                productId: basketModel.productId,
+                productName: basketModel.productName,
+                productPrice: basketModel.productPrice,
+                productCurrency: '',
+                productPhoto: basketModel.productPhoto,
+                categoryId: basketModel.categoryId,
+                categoryName: ''));
           },
           child: Row(
             children: [
@@ -119,16 +129,23 @@ adetWidget(var adet, BasketModel basketModel) {
           color: Colors.grey,
           child: Center(
               child: Obx(() => Text(
-                adet.toString(),
-                style: kTextStyle.copyWith(
-                    fontWeight: FontWeight.bold, fontSize: 20),
-              ))),
+                    adet.toString(),
+                    style: kTextStyle.copyWith(
+                        fontWeight: FontWeight.bold, fontSize: 20),
+                  ))),
         ),
         GestureDetector(
           onTap: () {
             adet++;
-            tutar.value += basketModel.productPrice;
-            controller.addBasket(ProductModel(productId: basketModel.productId, productName: basketModel.productName, productPrice: basketModel.productPrice, productCurrency: '', productPhoto: basketModel.productPhoto, categoryId: basketModel.categoryId, categoryName: ''));
+            controller.addTutar(basketModel.productPrice);
+            controller.addBasket(ProductModel(
+                productId: basketModel.productId,
+                productName: basketModel.productName,
+                productPrice: basketModel.productPrice,
+                productCurrency: '',
+                productPhoto: basketModel.productPhoto,
+                categoryId: basketModel.categoryId,
+                categoryName: ''));
             //BasketController().denemeBasketTutar(productPrice);
           },
           child: Row(
@@ -136,7 +153,7 @@ adetWidget(var adet, BasketModel basketModel) {
               Container(
                 width: 40,
                 child:
-                Icon(Icons.arrow_forward_ios_outlined, color: Colors.white),
+                    Icon(Icons.arrow_forward_ios_outlined, color: Colors.white),
               ),
             ],
           ),

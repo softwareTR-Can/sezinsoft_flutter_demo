@@ -109,11 +109,10 @@ class _Dashboard_ScreenState extends State<Dashboard_Screen> {
               //physics: BouncingScrollPhysics(),
               itemCount: productController.productList.length,
               itemBuilder: (context, index) {
-                GetStorageServices().saveListWithGetStorage('storageKey', [
-                  1,'2',3,4.2,'abc'
-                ]);
-                GetStorageServices().readWithGetStorage('storageKey');
-                //readList();
+                // GetStorageServices().saveListWithGetStorage('storageKey', [
+                //   1,'2',3,4.2,'abc'
+                // ]);
+                // GetStorageServices().readWithGetStorage('storageKey');
                 return Column(
                   children: [
                     productCard(productController.productList[index]),

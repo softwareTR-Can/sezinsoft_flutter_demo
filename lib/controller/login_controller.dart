@@ -27,18 +27,11 @@ Future<LoginResponseModel> login(String username, String password) async {
     }),
   );
 
-  print(jsonDecode(response.body));
-
   if (response.statusCode == 201) {
-    print(response.statusCode.toString());
-
     loginResponseModel = LoginResponseModel.fromMap(jsonDecode(response.body));
   } else if (response.statusCode == 200) {
-    print(response.statusCode.toString());
-
     loginResponseModel = LoginResponseModel.fromMap(jsonDecode(response.body));
   } else {
-    print(response.statusCode.toString());
     throw Exception('Failed');
   }
 
@@ -76,19 +69,14 @@ void getUser() async {
     }),
   );
 
-  print(jsonDecode(response.body));
-
   if (response.statusCode == 200) {
-    print(response.statusCode.toString());
-
     var jsonData = jsonDecode(response.body);
     var user = jsonData['data'];
     var userName = user['name'];
     box.write('username', userName);
     username.value = userName;
-    print(box.read('username'));
+    //print(box.read('username'));
   } else {
-    print(response.statusCode.toString());
     throw Exception('Failed');
   }
 }

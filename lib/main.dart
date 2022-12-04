@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:sezinsoft_demo/controller/basket_controller.dart';
 import 'package:sezinsoft_demo/views/dashboard_screen.dart';
 import 'package:sezinsoft_demo/views/login_screen.dart';
 
@@ -8,6 +9,7 @@ import 'controller/login_controller.dart';
 
 void main() async{
   await GetStorage.init();
+  BasketController().getTutarInStorage();
   runApp(const MyApp());
 }
 
@@ -16,9 +18,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //login('');
-    // num balance = 12.8;
-    // print("${balance.toStringAsFixed(2).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => "${m[1]},") }");
+    //BasketController().getBasket();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

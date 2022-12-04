@@ -5,7 +5,7 @@ import 'package:sezinsoft_demo/models/product_model.dart';
 import '../constants.dart';
 import '../controller/basket_controller.dart';
 
-var tutar = 0.0.obs;
+//var tutar = 0.0.obs;
 BasketController controller = BasketController();
 
 productCard(ProductModel product) {
@@ -45,18 +45,12 @@ productCard(ProductModel product) {
             ),
           ),
           const Spacer(),
-          GestureDetector(
-            onTap: () {
-              //controller.deleteBasket(product);
-              controller.getBasket();
-            },
-            child: Container(
-              height: Get.height / 4,
-              // width: Get.width / 2.1,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
-                child: Image.network(product.productPhoto, fit: BoxFit.fill),
-              ),
+          Container(
+            height: Get.height / 4,
+            // width: Get.width / 2.1,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 12, 0, 12),
+              child: Image.network(product.productPhoto, fit: BoxFit.fill),
             ),
           ),
         ],
@@ -67,7 +61,7 @@ ekleWidget(var adet, ProductModel product) {
   return GestureDetector(
     onTap: () {
       adet++;
-      tutar.value += product.productPrice;
+      controller.addTutar(product.productPrice);
       controller.addBasket(product);
     },
     child: Container(
@@ -99,7 +93,7 @@ adetWidget(var adet, ProductModel product) {
         GestureDetector(
           onTap: () {
             adet--;
-            tutar.value -= product.productPrice;
+            controller.deleteTutar(product.productPrice);
             controller.deleteBasket(product);
           },
           child: Row(
@@ -125,7 +119,7 @@ adetWidget(var adet, ProductModel product) {
         GestureDetector(
           onTap: () {
             adet++;
-            tutar.value += product.productPrice;
+            controller.addTutar(product.productPrice);
             controller.addBasket(product);
             //BasketController().denemeBasketTutar(productPrice);
           },

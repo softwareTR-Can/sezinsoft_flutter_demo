@@ -33,22 +33,11 @@ class CategoryController extends GetxController {
       }
     }
 
-    for (int i = 0; i < categoryList.length; i++) {
-      print(categoryList[i].categoryName);
-    }
-
-    print(jsonDecode(response.body));
-
     if (response.statusCode == 201) {
-      print(response.statusCode.toString());
-
       return CategoryResponseModel.fromMap(jsonDecode(response.body));
     } else if (response.statusCode == 200) {
-      print(response.statusCode.toString());
-
       return CategoryResponseModel.fromMap(jsonDecode(response.body));
     } else {
-      print(response.statusCode.toString());
       throw Exception('Failed to create album.');
     }
   }

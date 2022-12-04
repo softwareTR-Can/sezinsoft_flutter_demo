@@ -9,9 +9,10 @@ import '../models/basket_model.dart';
 
 dynamic basketList = [].obs;
 
+var basketTotal = 0.0.obs;
+
 class BasketController extends GetxController {
   var tutar = 0.0.obs;
-
 
   final box = GetStorage();
 
@@ -48,7 +49,8 @@ class BasketController extends GetxController {
       list.add(basketList[i].categoryId);
     }
 
-    GetStorageServices().saveListWithGetStorage('storageKey2', list);
+    GetStorageServices().saveListWithGetStorage('baskettt', list);
+    print(GetStorageServices().readWithGetStorage('baskettt'));
   }
 
   deleteBasket(ProductModel product) {
@@ -85,11 +87,13 @@ class BasketController extends GetxController {
       list.add(basketList[i].categoryId);
     }
 
-    GetStorageServices().saveListWithGetStorage('storageKey2', list);
+    GetStorageServices().saveListWithGetStorage('baskettt', list);
+    print(GetStorageServices().readWithGetStorage('baskettt'));
   }
 
   getBasket() {
-    var list = GetStorageServices().readWithGetStorage('storageKey2');
+    var list = box.read('baskettt');
+    //var list = GetStorageServices().readWithGetStorage('baskettt');
 
     for (int i = 0; i < list.length / 6; i += 6) {
       basketList.add(BasketModel(
@@ -101,5 +105,22 @@ class BasketController extends GetxController {
         categoryId: int.parse(list[i + 5]),
       ));
     }
+  }
+
+  addTutar(productPrice) {
+    basketTotal.value += productPrice;
+    box.write('basketTotal', basketTotal.value);
+    print(basketTotal.toString());
+  }
+
+  deleteTutar(productPrice) {
+    basketTotal.value -= productPrice;
+    box.write('basketTotal', basketTotal.value);
+    print(basketTotal.toString());
+  }
+
+  getTutarInStorage() {
+    basketTotal.value = box.read('basketTotal');
+    print(basketTotal.toString());
   }
 }

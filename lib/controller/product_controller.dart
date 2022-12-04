@@ -18,7 +18,6 @@ class ProductController extends GetxController {
         "category_id": "${categoryId}"
       }),
     );
-    print('product get çalıştı');
     var data = jsonDecode(response.body);
     //categoryList.add(jsonDecode(response.body)['data']);
     //categoryList = mapData.entries.map( (entry) => CategoryModel(categoryId: ['categoryId'],categoryName: ,)).toList();
@@ -26,21 +25,11 @@ class ProductController extends GetxController {
     productList =
         data['data'].map<ProductModel>((x) => ProductModel.fromMap(x)).toList();
 
-    for (int i = 0; i < productList.length; i++) {
-      print(productList[i].productName);
-    }
-    print(jsonDecode(response.body));
-
     if (response.statusCode == 201) {
-      print(response.statusCode.toString());
-
       return ProductResponseModel.fromMap(jsonDecode(response.body));
     } else if (response.statusCode == 200) {
-      print(response.statusCode.toString());
-
       return ProductResponseModel.fromMap(jsonDecode(response.body));
     } else {
-      print(response.statusCode.toString());
       throw Exception('Failed to create album.');
     }
   }
