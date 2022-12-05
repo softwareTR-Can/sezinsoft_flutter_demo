@@ -13,12 +13,16 @@ var basketTotal = 0.0.obs;
 
 class BasketController extends GetxController {
   var tutar = 0.0.obs;
-
+  var storageList = [].obs;
   final box = GetStorage();
 
   addBasket(ProductModel product) {
     /// sepete ürün ekleme --- parametre ürün
 
+    print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    print(storageList.toString());
+    print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+    print(box.read('baskettt').toString());
     int adet = 1;
 
     for (int i = 0; i < basketList.length; i++) {
@@ -91,11 +95,10 @@ class BasketController extends GetxController {
     print(GetStorageServices().readWithGetStorage('baskettt'));
   }
 
-  getBasket() {
-    var list = box.read('baskettt');
+  getBasket() async{
+    storageList = await box.read('baskettt');
     //var list = GetStorageServices().readWithGetStorage('baskettt');
-
-    for (int i = 0; i < list.length / 6; i += 6) {
+    /*for (int i = 0; i < list.length / 6; i += 6) {
       basketList.add(BasketModel(
         adet: int.parse(list[i]),
         productId: int.parse(list[i + 1]),
@@ -104,7 +107,7 @@ class BasketController extends GetxController {
         productPhoto: list[i + 4],
         categoryId: int.parse(list[i + 5]),
       ));
-    }
+    }*/
   }
 
   addTutar(productPrice) {
