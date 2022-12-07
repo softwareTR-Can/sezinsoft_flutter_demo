@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:sezinsoft_demo/get_storage_service.dart';
+import 'package:sezinsoft_demo/storage.dart';
 import 'package:sezinsoft_demo/models/login_response_model.dart';
 import 'package:sezinsoft_demo/views/dashboard_screen.dart';
 
@@ -10,6 +10,8 @@ import '../constants.dart';
 import '../show_snackbar.dart';
 
 var username = ''.obs;
+
+var box = GetStorage();
 
 Future<LoginResponseModel> login(String username, String password) async {
   LoginResponseModel loginResponseModel;
@@ -50,7 +52,7 @@ Future<LoginResponseModel> login(String username, String password) async {
 }
 
 bool isLogged() {
-  if (box.read('token').toString() == null) {
+  if (box.read('token').toString() == 'null') {
     return false;
   } else {
     getUser();
@@ -65,7 +67,7 @@ void getUser() async {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      'token': '2C2322E3-5696-45B8-923D-3C932EC21710',
+      'token': box.read('token').toString(),
     }),
   );
 

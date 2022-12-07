@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:sezinsoft_demo/models/category_model.dart';
 
 import '../constants.dart';
+
+var box = GetStorage();
 
 class CategoryController extends GetxController {
   dynamic categoryList = [].obs;
@@ -15,7 +18,7 @@ class CategoryController extends GetxController {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(
-          <String, String>{"token": "2C2322E3-5696-45B8-923D-3C932EC21710"}),
+          <String, String>{"token": box.read('token').toString()}),
     );
     var data = jsonDecode(response.body);
 

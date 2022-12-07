@@ -11,8 +11,9 @@ BasketController controller = BasketController();
 productCard(ProductModel product) {
   var adet = 0.obs;
 
-  for(int i =0;i<basketList.length;i++){
-    if(product.productId == basketList[i].productId && product.categoryId == basketList[i].categoryId){
+  for (int i = 0; i < basketList.length; i++) {
+    if (product.productId == basketList[i].productId &&
+        product.categoryId == basketList[i].categoryId) {
       adet.value = basketList[i].adet;
     }
   }

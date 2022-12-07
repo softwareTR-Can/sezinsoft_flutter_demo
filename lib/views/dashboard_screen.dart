@@ -6,7 +6,7 @@ import 'package:sezinsoft_demo/widget/basket_widget.dart';
 import 'package:sezinsoft_demo/widget/username_widget.dart';
 
 import '../controller/product_controller.dart';
-import '../get_storage_service.dart';
+import '../storage.dart';
 import '../widget/product_card.dart';
 
 class Dashboard_Screen extends StatefulWidget {

@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
               //hintText: 'Parola',
               labelText: 'Parola',
             ),
-            onChanged: (value) => username = value,
+            onChanged: (value) => password = value,
           ),
         ],
       ),

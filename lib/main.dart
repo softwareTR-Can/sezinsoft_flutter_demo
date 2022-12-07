@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sezinsoft_demo/controller/basket_controller.dart';
+import 'package:sezinsoft_demo/storage.dart';
 import 'package:sezinsoft_demo/views/dashboard_screen.dart';
 import 'package:sezinsoft_demo/views/login_screen.dart';
 
@@ -10,6 +11,7 @@ import 'controller/login_controller.dart';
 void main() async{
   await GetStorage.init();
   BasketController().getTutarInStorage();
+  BasketController().getBasket();
   runApp(const MyApp());
 }
 
@@ -19,6 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //BasketController().getBasket();
+    //Prefs().setBasketList(['1','2','3','4','5','6']);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

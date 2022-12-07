@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sezinsoft_demo/models/product_model.dart';
 import 'package:http/http.dart' as http;
 import '../constants.dart';
 
 class ProductController extends GetxController {
   dynamic productList = [].obs;
+  var box = GetStorage();
 
   Future<ProductResponseModel> getProduct(int categoryId) async {
     final response = await http.post(
@@ -14,7 +16,7 @@ class ProductController extends GetxController {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        "token": "2C2322E3-5696-45B8-923D-3C932EC21710",
+        "token": box.read('token').toString(),
         "category_id": "${categoryId}"
       }),
     );
